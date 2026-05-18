@@ -19,7 +19,7 @@ object personaje {
 		}
 	}
 
-	method hayCultivosEnLaParcela(){
+	method hayCultivosEnLaParcela(){ //habla con granja sobre parcelas y lo que hay en ellas.
 		return game.getObjectsIn(position).size() > 1
 	}
 
