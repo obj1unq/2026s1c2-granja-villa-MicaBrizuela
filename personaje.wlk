@@ -3,7 +3,7 @@ import direcciones.*
 import cultivos.*
 
 object personaje {
-	const cultivosCocechados = []
+	const cultivosCosechados = []
 	var property position = game.origin()
 	const property image = "fplayer.png"
 
@@ -12,7 +12,7 @@ object personaje {
 		position = nuevaPos
 	}
 
-	method sembrarMaiz(){
+	method sembrarMaiz(){ //solo sembrar
 		if (not self.hayCultivosEnLaParcela()) {
 			const maizNuevo = new Maiz(position = self.position())
 			game.addVisual(maizNuevo)

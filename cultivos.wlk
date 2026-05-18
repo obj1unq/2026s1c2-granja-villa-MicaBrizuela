@@ -1,8 +1,10 @@
 import wollok.game.*
 import direcciones.*
+
+//falta sembrar en cada cultivo 
 class Maiz {
-	var property position = null
-	var estado = "baby"
+	var property position = game.at(1,1)
+	var estado = "baby" //mudarlo a estado
 	// method position() {
 	// 	// TODO: hacer que aparezca donde lo plante Hector
 	// 	return game.at(1, 1)
@@ -19,7 +21,7 @@ class Maiz {
 
 class Trigo {
 	var property position = game.origin()
-	var medidorEvolucion = 0
+	var medidorEvolucion = 0 //mudarlo a estado
 	// method position() {
 	// 	// TODO: hacer que aparezca donde lo plante Hector
 	// 	return game.at(1, 1)
