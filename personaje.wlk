@@ -1,9 +1,10 @@
 import wollok.game.*
 import direcciones.*
 import cultivos.*
+import granja.*
 
 object personaje {
-	const cultivosCosechados = []
+	const cosechas = #{}
 	var property position = game.origin()
 	const property image = "fplayer.png"
 
@@ -12,44 +13,43 @@ object personaje {
 		position = nuevaPos
 	}
 
-	//el metodo sembrar tiene la responsabilidad de avisar al manager que sembro 
-	// un cultivo y ademas recibe cual cultivo se siembra.
-
-	method sembrarMaiz(){ //solo sembrar
-		if (not self.hayCultivosEnLaParcela()) {
-			const maizNuevo = new Maiz(position = self.position())
-			game.addVisual(maizNuevo)
+	method sembrar(_cultivo){
+		if (not self.hayCultivosEnLaParcela()){
+			granja.agregarCultivo(_cultivo)
+			game.addVisual(_cultivo)
 		}
 	}
 
-	method hayCultivosEnLaParcela(){ //habla con granja sobre parcelas y lo que hay en ellas.
-		return game.getObjectsIn(position).size() > 1
-	}
-
-	method sembrarTrigo(){
-		if (not self.hayCultivosEnLaParcela()) {
-			const trigoNuevo = new Trigo(position = self.position())
-			game.addVisual(trigoNuevo)
-		}
-	}
-
-	method sembrarTomaco(){
-		if (not self.hayCultivosEnLaParcela()) {
-			const tomacoNuevo = new Tomaco(position = self.position())
-			game.addVisual(tomacoNuevo)
-		}
+	method hayCultivosEnLaParcela(){
+		return granja.hayCultivosEn(position)
 	}
 
 	method regar(){
-		self.validarHayPlanta()
-		game.uniqueCollider(self).regar()
+		self.validarHayPlanta('no tengo nada para regar')
+		granja.cultivoAca(position).regar()
 	}
 
-	method validarHayPlanta(){
+	method validarHayPlanta(_s){
 		if (not self.hayCultivosEnLaParcela()){
-			self.error('no tengo nada para regar')
+			self.error(_s)
 		}
 	}
+
+	method cosechar(){
+		self.validarHayPlanta('no tengo nada para cosechar')
+		if (granja.cultivoAca(position).puedoCosechar()) {
+			const c = granja.cultivoAca(position)
+			cosechas.add(c)
+			game.removeVisual(c)
+			granja.eliminarCultivo(c)
+		}
+	}
+
+	method vender(){
+		
+	}
+
+
 
 
 

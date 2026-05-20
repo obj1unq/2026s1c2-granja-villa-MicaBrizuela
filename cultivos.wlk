@@ -1,42 +1,48 @@
+import personaje.*
 import wollok.game.*
 import direcciones.*
+import granja.*
 
 //falta sembrar en cada cultivo 
 class Maiz {
 	var property position = game.at(1,1)
-	var estado = "baby" //mudarlo a estado
+	var estado = maizBebe
 	// method position() {
 	// 	// TODO: hacer que aparezca donde lo plante Hector
 	// 	return game.at(1, 1)
 	// }
 	method image() {
 		// TODO: hacer que devuelva la imagen que corresponde
-		return "corn_" + estado + ".png"
+		return estado.imagen()
 	}
 
 	method regar(){
-		estado = "adult"
+		estado = maizAdulto
+	}
+
+	method puedoCosechar(){
+		return estado.esCesechable()
 	}
 }
 
 class Trigo {
 	var property position = game.origin()
-	var medidorEvolucion = 0 //mudarlo a estado
+	var estado = trigo0
 	// method position() {
 	// 	// TODO: hacer que aparezca donde lo plante Hector
 	// 	return game.at(1, 1)
 	// }
 	method image() {
 		// TODO: hacer que devuelva la imagen que corresponde
-		return "wheat_" + medidorEvolucion + ".png"
+		return estado.imagen()
 	}
 
 	method regar(){
-		if (medidorEvolucion < 3){
-			medidorEvolucion += 1
-		} else {
-			medidorEvolucion = 0
-		}
+		estado = estado.siguiente()
+	}
+
+	method puedoCosechar(){
+		return estado.esCochechable()
 	}
 }
 
@@ -54,12 +60,67 @@ class Tomaco {
 
 	method regar(){
 		const nuevaPos = tablero.posicionEnEjeY(position)
-		if (not self.hayPlantaAca(nuevaPos)){
+		if (not granja.hayCultivosEn(nuevaPos)){
 			position = nuevaPos
 		}
 	}
+	method puedoCosechar() {
+		return true
+	}
+}
 
-	method hayPlantaAca(_position){
-		return game.getObjectsIn(_position).size() == 1
+object maizBebe{
+	method imagen(){
+		return "corn_baby.png"
+	}
+
+	method esCochechable(){
+		return false
+	}
+}
+
+object maizAdulto{
+	method imagen(){
+		return "corn_adult.png"
+	}
+}
+
+object trigo0{
+	method imagen(){
+		return "wheat_0.png"
+	}
+
+	method siguiente(){
+		return trigo1
+	}
+}
+
+object trigo1{
+	method imagen(){
+		return "wheat_1.png"
+	}
+
+	method siguiente(){
+		return trigo2
+	}
+}
+
+object trigo2{
+	method imagen(){
+		return "wheat_2.png"
+	}
+	
+	method siguiente(){
+		return trigo3
+	}
+}
+
+object trigo3{
+	method imagen(){
+		return "wheat_3.png"
+	}
+
+	method siguiente(){
+		return trigo0
 	}
 }

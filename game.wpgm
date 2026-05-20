@@ -19,10 +19,12 @@ program farmville {
 	keyboard.s().onPressDo({personaje.mover(abajo)})
 	keyboard.a().onPressDo({personaje.mover(izquierda)})
 	keyboard.d().onPressDo({personaje.mover(derecha)})
-	keyboard.m().onPressDo({personaje.sembrarMaiz()})
-	keyboard.t().onPressDo({personaje.sembrarTrigo()})
-	keyboard.o().onPressDo({personaje.sembrarTomaco()})
+	keyboard.m().onPressDo({personaje.sembrar(new Maiz(position = personaje.position()))})
+	keyboard.t().onPressDo({personaje.sembrar(new Trigo(position = personaje.position()))})
+	keyboard.o().onPressDo({personaje.sembrar(new Tomaco(position = personaje.position()))})
 	keyboard.r().onPressDo({personaje.regar()})
+	keyboard.c().onPressDo({personaje.cosechar()})
+	keyboard.v().onPressDo({personaje.vender()})
 
 
  	//  COMIENZA
