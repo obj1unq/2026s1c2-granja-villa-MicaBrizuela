@@ -12,6 +12,9 @@ object personaje {
 		position = nuevaPos
 	}
 
+	//el metodo sembrar tiene la responsabilidad de avisar al manager que sembro 
+	// un cultivo y ademas recibe cual cultivo se siembra.
+
 	method sembrarMaiz(){ //solo sembrar
 		if (not self.hayCultivosEnLaParcela()) {
 			const maizNuevo = new Maiz(position = self.position())
