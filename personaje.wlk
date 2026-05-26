@@ -5,6 +5,7 @@ import granja.*
 
 object personaje {
 	const cosechas = #{}
+	var cantidadOro = 0
 	var property position = game.origin()
 	const property image = "fplayer.png"
 
@@ -46,8 +47,18 @@ object personaje {
 	}
 
 	method vender(){
-		
+		cantidadOro = cosechas.sum({c => c.precio()})
+		cosechas.clear()
 	}
+
+	method cantidadCosechas(){
+		return cosechas.size()
+	}
+
+	method declaracionAcumulado(){
+		game.say(self,"Tengo " + cantidadOro + ", y " + self.cantidadCosechas() + " para vender")
+	}
+
 
 
 
