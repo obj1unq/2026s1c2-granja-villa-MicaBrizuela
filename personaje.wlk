@@ -64,6 +64,12 @@ object personaje {
 		console.println("game deberia haber hablado")
 	}
 
+	method dejarAspersorAca(){
+		const a = new Aspersor(position = self.position())
+		game.addVisual(a)
+		granja.agregarAspersor(a)
+	}
+
 
 
 

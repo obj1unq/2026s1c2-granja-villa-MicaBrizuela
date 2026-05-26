@@ -26,6 +26,10 @@ object tablero {
 			return self.abajoDelTodo(position)
 		}
     }
+
+    method limitrofes(position){
+        return #{arriba.siguiente(position), abajo.siguiente(position), derecha.siguiente(position), izquierda.siguiente(position)}
+    }
 }
 
 object arriba {
