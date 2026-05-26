@@ -25,6 +25,7 @@ program farmville {
 	keyboard.r().onPressDo({personaje.regar()})
 	keyboard.c().onPressDo({personaje.cosechar()})
 	keyboard.v().onPressDo({personaje.vender()})
+	keyboard.space().onPressDo({personaje.declararAcumulado()})
 
 
  	//  COMIENZA

@@ -47,7 +47,7 @@ object personaje {
 	}
 
 	method vender(){
-		cantidadOro = cosechas.sum({c => c.precio()})
+		cantidadOro += cosechas.sum({c => c.precio()})
 		cosechas.clear()
 	}
 
@@ -55,8 +55,13 @@ object personaje {
 		return cosechas.size()
 	}
 
-	method declaracionAcumulado(){
-		game.say(self,"Tengo " + cantidadOro + ", y " + self.cantidadCosechas() + " para vender")
+	method cantidadOro(){
+		return cantidadOro
+	}
+
+	method declararAcumulado(){
+		game.say(self,"Tengo " + self.cantidadOro() + ", y " + self.cantidadCosechas() + " para vender")
+		console.println("game deberia haber hablado")
 	}
 
 

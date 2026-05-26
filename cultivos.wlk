@@ -21,7 +21,11 @@ class Maiz {
 	}
 
 	method puedoCosechar(){
-		return estado.esCesechable()
+		return estado.esCosechable()
+	}
+
+	method precio(){
+		return 150
 	}
 }
 
@@ -42,7 +46,11 @@ class Trigo {
 	}
 
 	method puedoCosechar(){
-		return estado.esCochechable()
+		return estado.esCosechable()
+	}
+
+	method precio(){
+		return (estado.etapa() - 1) * 100
 	}
 }
 
@@ -67,6 +75,10 @@ class Tomaco {
 	method puedoCosechar() {
 		return true
 	}
+
+	method precio(){
+		return 80
+	}
 }
 
 object maizBebe{
@@ -74,7 +86,7 @@ object maizBebe{
 		return "corn_baby.png"
 	}
 
-	method esCochechable(){
+	method esCosechable(){
 		return false
 	}
 }
@@ -82,6 +94,10 @@ object maizBebe{
 object maizAdulto{
 	method imagen(){
 		return "corn_adult.png"
+	}
+
+	method esCosechable(){
+		return true
 	}
 }
 
@@ -93,6 +109,14 @@ object trigo0{
 	method siguiente(){
 		return trigo1
 	}
+
+	method etapa(){
+		return 0
+	}
+
+	method esCosechable(){
+		return false
+	}
 }
 
 object trigo1{
@@ -102,6 +126,14 @@ object trigo1{
 
 	method siguiente(){
 		return trigo2
+	}
+
+	method etapa(){
+		return 1
+	}
+
+	method esCosechable(){
+		return false
 	}
 }
 
@@ -113,6 +145,14 @@ object trigo2{
 	method siguiente(){
 		return trigo3
 	}
+
+	method etapa(){
+		return 2
+	}
+
+	method esCosechable(){
+		return true
+	}
 }
 
 object trigo3{
@@ -122,5 +162,13 @@ object trigo3{
 
 	method siguiente(){
 		return trigo0
+	}
+
+	method etapa(){
+		return 3
+	}
+
+	method esCosechable(){
+		return true
 	}
 }
