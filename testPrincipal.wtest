@@ -1,0 +1,460 @@
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// testPrincipal.wtest
+// sembrar.wtest
+// sembrar.wtest
+// sembrar.wtest
+// sembrar.wtest
+// sembrar.wtest
+// sembrar.wtest
+// sembrar.wtest
+// sembrar.wtest
+// sembrar.wtest
+// sembrar.wtest
+// sembrar.wtest
+// sembrar.wtest
+// sembrar.wtest
+import personaje.*
+import cultivos.*
+import granja.*
+import wollok.game.*
+import direcciones.*
+
+describe "el personaje puede sembrar"{
+    method initialize(){
+        game.height(10)
+        game.width(10)
+        personaje.position(game.origin())
+        game.addVisual(personaje)
+    }
+    test "sembrar Maiz, es baby, existe en la granja"{
+        const maiz = maizFactory.crear()
+        assert.that(granja.cultivos().isEmpty())
+        personaje.sembrar(maiz)
+        assert.equals(maizBebe, maiz.estado())
+        assert.equals("corn_baby.png", maiz.image())
+        assert.that(granja.cultivos().contains(maiz))
+    }
+
+    test "sembrar trigo, es 0, es wheat_0.png, existe en la granja"{
+        const trigo = trigoFactory.crear()
+        assert.equals(trigo.estado(), trigo0)
+        assert.that(granja.cultivos().isEmpty())
+        personaje.sembrar(trigo)
+        assert.equals("wheat_0.png", trigo.image())
+        assert.that(granja.cultivos().contains(trigo))
+    }
+
+    test "sembrar tomaco, es baby, existe en la granja"{
+        const tomaco  = tomacoFactory.crear()
+        assert.that(granja.cultivos().isEmpty())
+        personaje.sembrar(tomaco)
+        assert.equals("tomaco.png", tomaco.image())
+        assert.that(granja.cultivos().contains(tomaco))
+    }
+
+    test "quiero sembrar dos cultivos en la misma posicion, exploto"{
+        const maiz1 = maizFactory.crear()
+        const maiz2 = maizFactory.crear()
+        personaje.sembrar(maiz1)
+        assert.throwsException({personaje.sembrar(maiz2)})
+    }
+}
+
+describe "personaje puede regar"{
+    method initialize(){
+        game.height(10)
+        game.width(10)
+        personaje.position(game.origin())
+        game.addVisual(personaje)
+    }
+    test "maiz cambia de estado a adulto permanente"{
+        const maiz1 = maizFactory.crear()
+        personaje.sembrar(maiz1)
+        personaje.regar()
+        assert.equals("corn_adult.png", maiz1.image())
+        assert.equals(maizAdulto, maiz1.estado())
+        personaje.regar()
+        assert.equals(maizAdulto, maiz1.estado())
+        assert.equals("corn_adult.png", maiz1.image())
+    }
+
+    test "trigo cambia a un siguiente estado cada regado"{
+        const trigo = trigoFactory.crear()
+        personaje.sembrar(trigo)
+        assert.equals(trigo0, trigo.estado())
+        assert.equals("wheat_0.png", trigo.image())
+        personaje.regar()
+        assert.equals(trigo1, trigo.estado())
+        assert.equals("wheat_1.png", trigo.image())
+        personaje.regar()
+        assert.equals(trigo2, trigo.estado())
+        assert.equals("wheat_2.png", trigo.image())
+        personaje.regar()
+        assert.equals(trigo3, trigo.estado())
+        assert.equals("wheat_3.png", trigo.image())
+        personaje.regar()
+        assert.equals(trigo0, trigo.estado())
+        assert.equals("wheat_0.png", trigo.image())     
+    }
+
+    test "tomacos se mueve para arriba"{
+        const tomaco  = tomacoFactory.crear()
+        personaje.sembrar(tomaco)
+        personaje.regar()
+        assert.equals(game.at(0,1), tomaco.position())
+    }
+
+    test "tomaco en borde pasa abajo del todo"{
+        personaje.position(game.at(0,9))
+        const tomaco = tomacoFactory.crear()
+        personaje.sembrar(tomaco)
+        personaje.regar()
+        assert.equals(game.origin(), tomaco.position())
+    }
+
+    test "tomaco no se mueve si tiene algo arriba o en borde"{
+        const tomacoArriba  = tomacoFactory.crear()
+        personaje.sembrar(tomacoArriba)
+        personaje.regar() //sube tomacoArriba a 0,1 desde 0,0
+
+        const tomacoTest = tomacoFactory.crear()
+        personaje.sembrar(tomacoTest)
+        personaje.regar()
+        assert.equals(game.origin(), tomacoTest.position()) //trato de que suba otro tomaco a 0,1 no puede porque esta tomacoArriba.
+
+        personaje.position(game.at(0,9))
+        const tomacoBorde  = tomacoFactory.crear()
+        personaje.sembrar(tomacoBorde)
+        personaje.regar() // puse otro tomaco en 0,9, lo riego, pero no puede pasar a 0,0 porque ya esta el tomacoTest
+        assert.equals(game.at(0,9), tomacoBorde.position())
+    }
+
+    test "Quiere regar, no hay ninguna planta"{
+        assert.throwsException({personaje.regar()})
+    }
+}
+
+describe "personaje puede cosechar"{
+    method initialize(){
+        game.height(10)
+        game.width(10)
+        personaje.position(game.origin())
+        game.addVisual(personaje)
+    }
+
+    test "no hay plantas, quiere cosechar"{
+        assert.throwsException({personaje.cosechar()})
+        assert.that(personaje.cosechas().isEmpty())
+    }
+
+    test "hay un a planta de tomaco, cosecha"{
+        const tomaco  = tomacoFactory.crear()
+        personaje.sembrar(tomaco)
+        assert.that(personaje.cosechas().isEmpty())
+        personaje.cosechar()
+        assert.that(personaje.cosechas().contains(tomaco))
+        assert.equals(1, personaje.cantidadCosechas())
+        assert.that(!granja.cultivos().contains(tomaco))
+    }
+
+    test "trigo no cosechable, explota hasta llegar a etapa 2"{
+        const trigo = trigoFactory.crear()
+        personaje.sembrar(trigo)
+        assert.throwsException({personaje.cosechar()})
+        personaje.regar()
+        assert.throwsException({ personaje.cosechar() })
+        personaje.regar()
+        personaje.cosechar()
+        assert.that(personaje.cosechas().contains(trigo))
+        assert.equals(1, personaje.cantidadCosechas())
+        assert.that(!granja.cultivos().contains(trigo))
+    }
+
+    test "maiz no cosechable, explota hasta que es adulto"{
+        const maiz1 = maizFactory.crear()
+        personaje.sembrar(maiz1)
+        assert.throwsException({personaje.cosechar()})
+        personaje.regar()
+        personaje.cosechar()
+        assert.that(personaje.cosechas().contains(maiz1))
+        assert.equals(1, personaje.cantidadCosechas())
+        assert.that(!granja.cultivos().contains(maiz1))
+    }
+}
+
+describe "Vender en mercado"{
+    method initialize(){
+        game.height(10)
+        game.width(10)
+        personaje.position(game.origin())
+        game.addVisual(personaje)
+    }
+
+    test "vendo un tomaco en el mercado"{
+        const m = new Mercado (position = game.at(0,1), cantidadMonedas = 100)
+        granja.agregarMercado(m)
+        const tomaco1 = tomacoFactory.crear()
+        personaje.sembrar(tomaco1)
+        personaje.cosechar()
+        personaje.position(game.at(0,1))
+        assert.that(m.mercaderia().isEmpty())
+        personaje.vender()
+        assert.equals(80, personaje.cantidadOro())
+        assert.equals(20, m.cantidadMonedas())
+        assert.that(personaje.cosechas().isEmpty())
+        assert.that(m.mercaderia().contains(tomaco1))
+    }
+
+    test "vendo un maiz en el mercado"{
+        const m = new Mercado (position = game.at(0,1), cantidadMonedas = 200)
+        granja.agregarMercado(m)
+        const maiz = maizFactory.crear()
+        personaje.sembrar(maiz)
+        personaje.regar()
+        personaje.cosechar()
+        personaje.position(game.at(0,1))
+        assert.that(m.mercaderia().isEmpty())
+        personaje.vender()
+        assert.equals(150, personaje.cantidadOro())
+        assert.equals(50, m.cantidadMonedas())
+        assert.that(personaje.cosechas().isEmpty())
+        assert.that(m.mercaderia().contains(maiz))
+    }
+
+    test "vendo un trigo de etapa 2 y etapa 3 en el mercado"{
+        const m = new Mercado (position = game.at(0,1), cantidadMonedas = 300)
+        granja.agregarMercado(m)
+        const trigoE2 = trigoFactory.crear()
+        personaje.sembrar(trigoE2)
+        personaje.regar()
+        personaje.regar()
+        personaje.cosechar()
+        personaje.position(game.at(0,1))
+        assert.that(m.mercaderia().isEmpty())
+        personaje.vender()
+        assert.equals(100, personaje.cantidadOro())
+        assert.equals(200, m.cantidadMonedas())
+        assert.that(personaje.cosechas().isEmpty())
+        assert.that(m.mercaderia().contains(trigoE2))
+
+        personaje.position(game.at(0,0))
+        const trigoE3 = trigoFactory.crear()
+        personaje.sembrar(trigoE3)
+        personaje.regar()
+        personaje.regar()
+        personaje.regar()
+        personaje.cosechar()
+        personaje.position(game.at(0,1))
+        personaje.vender()
+        assert.equals(300, personaje.cantidadOro())
+        assert.equals(0, m.cantidadMonedas())
+        assert.that(personaje.cosechas().isEmpty())
+        assert.that(m.mercaderia().contains(trigoE2))
+    }
+
+    test "No tengo nada para vender, vendo nada en el mercado"{
+        const m = new Mercado (position = game.at(0,1), cantidadMonedas = 100)
+        granja.agregarMercado(m)
+        personaje.position(game.at(0,1))
+        personaje.vender()
+        assert.equals(0, personaje.cantidadOro())
+        assert.equals(100, m.cantidadMonedas())
+        assert.that(m.mercaderia().isEmpty())
+    }
+
+    test "quiero vender, no estoy en un mercado, no hace nada"{
+        const tomaco1 = tomacoFactory.crear()
+        personaje.sembrar(tomaco1)
+        personaje.cosechar()
+        personaje.vender()
+        assert.equals(0, personaje.cantidadOro())       
+    }
+
+    test "No pueden pagarle, personaje no acepta fiado"{
+        const m = new Mercado (position = game.at(0,1), cantidadMonedas = 50)
+        granja.agregarMercado(m)
+        const tomaco1 = tomacoFactory.crear()
+        personaje.sembrar(tomaco1)
+        personaje.cosechar()
+        personaje.position(game.at(0,1))
+        assert.that(m.mercaderia().isEmpty())
+        personaje.vender()
+        assert.equals(0, personaje.cantidadOro())
+        assert.equals(50, m.cantidadMonedas())
+        assert.that(m.mercaderia().isEmpty())
+    }
+
+
+}
+
+describe "aspersores"{
+    test "el aspersor puede regar limitrofes y granja lo conoce"{
+
+        const posAspersor = game.at(1,1)
+        personaje.position(posAspersor)
+        personaje.dejarAspersorAca()
+
+        personaje.position(izquierda.siguiente(posAspersor))
+        const trigoIzq = trigoFactory.crear()
+        personaje.sembrar(trigoIzq)
+
+        personaje.position(derecha.siguiente(posAspersor))
+        const trigoDer = trigoFactory.crear()
+        personaje.sembrar(trigoDer)
+
+        personaje.position(abajo.siguiente(posAspersor))
+        const trigoAbajo = trigoFactory.crear()
+        personaje.sembrar(trigoAbajo)
+
+        personaje.position(arriba.siguiente(posAspersor))
+        const trigoArriba = trigoFactory.crear()
+        personaje.sembrar(trigoArriba)
+
+        assert.equals(trigo0, trigoAbajo.estado())
+        assert.equals(trigo0, trigoArriba.estado())
+        assert.equals(trigo0, trigoDer.estado())
+        assert.equals(trigo0, trigoIzq.estado())
+
+        granja.regadoAutomatico()
+
+        assert.equals(trigo1, trigoAbajo.estado())
+        assert.equals(trigo1, trigoArriba.estado())
+        assert.equals(trigo1, trigoDer.estado())
+        assert.equals(trigo1, trigoIzq.estado())        
+    }
+
+    test  "pongo dos aspersores, dos lindantes, no pasa nada"{
+        const posAspersor = game.at(1,1) 
+        
+        personaje.position(posAspersor)
+        personaje.dejarAspersorAca()
+
+        personaje.position(game.at(0,1))
+        personaje.dejarAspersorAca()
+
+        granja.regadoAutomatico()
+        assert.equals(posAspersor.left(1), game.at(0,1))
+    }
+
+    test "dejo al personaje al lado del aspersor, no pada nada"{
+        const posAspersor = game.at(1,1) 
+
+        personaje.position(posAspersor)
+        personaje.dejarAspersorAca()
+
+        personaje.position(game.at(0,1))
+
+        granja.regadoAutomatico()
+        assert.equals(posAspersor.left(1), game.at(0,1))
+    }
+}

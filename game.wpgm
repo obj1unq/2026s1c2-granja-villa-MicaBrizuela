@@ -1,6 +1,10 @@
+// game.wpgm
+// game.wpgm
 import wollok.game.*
 import personaje.*
 import cultivos.*
+import direcciones.*
+import granja.*
 
 program farmville {
 	//  CONFIG	
@@ -9,10 +13,37 @@ program farmville {
 	game.width(10)
 	game.ground("ground.png")
 
+	//inciio mercados
+	granja.abrirMercado()
+
 	//  VISUALES
- 	game.addVisualCharacter(personaje)
- 	game.addVisual(new Maiz()) // Se agrega a modo de prueba
- 	
+ 	game.addVisual(personaje)
+
+	// CONTROLES
+	keyboard.up().onPressDo({personaje.mover(arriba)})
+	keyboard.down().onPressDo({personaje.mover(abajo)})
+	keyboard.left().onPressDo({personaje.mover(izquierda)})
+	keyboard.right().onPressDo({personaje.mover(derecha)})
+
+	//sembrado
+	keyboard.m().onPressDo({personaje.sembrar(maizFactory.crear())})
+	keyboard.t().onPressDo({personaje.sembrar(trigoFactory.crear())})
+	keyboard.o().onPressDo({personaje.sembrar(tomacoFactory.crear())})
+
+	//regado
+	keyboard.r().onPressDo({personaje.regar()})
+	keyboard.a().onPressDo({personaje.dejarAspersorAca()})
+
+	//venta
+	keyboard.c().onPressDo({personaje.cosechar()})
+	keyboard.v().onPressDo({personaje.vender()})
+	keyboard.space().onPressDo({personaje.declararAcumulado()})
+
+	
+	//eventos automaticos
+	game.onTick(1000, "regado_automatico", {granja.regadoAutomatico()})
+
+
  	//  COMIENZA
 	game.start()
 }
