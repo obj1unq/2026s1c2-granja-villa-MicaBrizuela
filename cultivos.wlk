@@ -11,16 +11,10 @@ import wollok.game.*
 import direcciones.*
 import granja.*
 
-//falta sembrar en cada cultivo 
 class Maiz {
 	var property position = game.at(1,1)
 	var property estado = maizBebe //test property
-	// method position() {
-	// 	// TODO: hacer que aparezca donde lo plante Hector
-	// 	return game.at(1, 1)
-	// }
 	method image() {
-		// TODO: hacer que devuelva la imagen que corresponde
 		return estado.imagen()
 	}
 
@@ -40,12 +34,7 @@ class Maiz {
 class Trigo {
 	var property position = game.origin()
 	var property estado = trigo0 //solo por testing
-	// method position() {
-	// 	// TODO: hacer que aparezca donde lo plante Hector
-	// 	return game.at(1, 1)
-	// }
 	method image() {
-		// TODO: hacer que devuelva la imagen que corresponde
 		return "wheat_" + estado.etapa() + ".png"
 	}
 
@@ -65,18 +54,13 @@ class Trigo {
 
 class Tomaco {
 	var property position = game.at(1, 1)
-	// method position() {
-	// 	// TODO: hacer que aparezca donde lo plante Hector
-	// 	return game.at(1, 1)
-	// }
 	method image() {
-		// TODO: hacer que devuelva la imagen que corresponde
 		return "tomaco.png"
 	}
 
 	method regar(){
 		const nuevaPos = tablero.posicionEnEjeY(position)
-		if (not granja.hayAlgoAca(nuevaPos)){
+		if (not granja.hayAlgoAca(nuevaPos)){ //no se mueve si hay algo, no explota
 			position = nuevaPos
 		}
 	}
@@ -188,7 +172,7 @@ object trigo3{
 
 
 class Mercado{
-    const mercaderia = #{}
+    const property mercaderia = #{}
     var property position = null
     const property image = "market.png"
     var property cantidadMonedas = null
@@ -205,12 +189,6 @@ class Mercado{
         personaje.recibirPago(self.montoAPagar(_cultivos))
 		cantidadMonedas -= self.montoAPagar(_cultivos)
         mercaderia.addAll(_cultivos)
-    }
-
-    method comprarSiPuede(_cultivos){
-        if (self.puedoPagar(_cultivos)){
-			self.comprar(_cultivos)
-		}
     }
 }
 

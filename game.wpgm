@@ -18,7 +18,6 @@ program farmville {
 
 	//  VISUALES
  	game.addVisual(personaje)
- 	// game.addVisual(new Maiz()) // Se agrega a modo de prueba
 
 	// CONTROLES
 	keyboard.up().onPressDo({personaje.mover(arriba)})

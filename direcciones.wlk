@@ -29,7 +29,7 @@ object tablero {
     }
 
     method limitrofes(position){
-        return #{arriba.siguiente(position), abajo.siguiente(position), derecha.siguiente(position), izquierda.siguiente(position)}
+        return #{position.up(1), position.down(1), position.right(1), position.left(1)}
     }
 
     method posicionAleatoria(){

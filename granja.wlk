@@ -13,6 +13,14 @@
 // granja.wlk
 // granja.wlk
 // granja.wlk
+// granja.wlk
+// granja.wlk
+// granja.wlk
+// granja.wlk
+// granja.wlk
+// granja.wlk
+// granja.wlk
+// granja.wlk
 
 import direcciones.*
 import wollok.game.*
@@ -30,10 +38,14 @@ object granja {
     method abrirMercado(){
         if(mercados.size() < 3){
             const m = mercadoFactory.crear()
-            mercados.add(m)
-            game.addVisual(m)
+            self.agregarMercado(m)
             self.abrirMercado()
         }
+    }
+
+    method agregarMercado(_mercado) {
+        game.addVisual(_mercado)
+        mercados.add(_mercado)
     }
 
     method hayMercadoAca(_position){
@@ -59,10 +71,12 @@ object granja {
     }
 
     method agregarCultivo(_cultivo){
+        game.addVisual(_cultivo)
         cultivos.add(_cultivo)
     }
 
     method eliminarCultivo(_cultivo){
+        game.removeVisual(_cultivo)
         cultivos.remove(_cultivo)
     }
 

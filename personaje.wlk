@@ -6,13 +6,17 @@
 // personaje.wlk
 // personaje.wlk
 // personaje.wlk
+// personaje.wlk
+// personaje.wlk
+// personaje.wlk
+// personaje.wlk
 import wollok.game.*
 import direcciones.*
 import cultivos.*
 import granja.*
 
 object personaje {
-	const cosechas = #{}
+	const property cosechas = #{} //testing
 	var cantidadOro = 0
 	var property position = game.origin()
 	const property image = "fplayer.png"
@@ -25,7 +29,7 @@ object personaje {
 	method sembrar(_cultivo){
 		self.validarNoHayNada("No tengo espacio para plantar")
 		granja.agregarCultivo(_cultivo)
-		game.addVisual(_cultivo)
+		
 	}
 
 	method validarNoHayNada(_s){
@@ -47,17 +51,21 @@ object personaje {
 
 	method cosechar(){
 		self.validarHayPlanta('no tengo nada para cosechar')
-		if (granja.cultivoAca(position).puedoCosechar()) {
-			const c = granja.cultivoAca(position)
-			cosechas.add(c)
-			game.removeVisual(c)
-			granja.eliminarCultivo(c)
+		self.validarPuedoCosechar()
+		const c = granja.cultivoAca(position)
+		cosechas.add(c)
+		granja.eliminarCultivo(c)
+	}
+
+	method validarPuedoCosechar() {
+		if (not granja.cultivoAca(position).puedoCosechar()){
+			self.error("Le falta riego")
 		}
 	}
 
 	method vender(){
-		if (granja.hayMercadoAca(position)){
-			granja.mercadoAca(position).comprarSiPuede(cosechas)
+		if (granja.hayMercadoAca(position) and granja.mercadoAca(position).puedoPagar(cosechas)){
+			granja.mercadoAca(position).comprar(cosechas)
 			cosechas.clear()
 		}
 	}
@@ -76,7 +84,6 @@ object personaje {
 
 	method declararAcumulado(){
 		game.say(self,"Tengo " + self.cantidadOro() + ", y " + self.cantidadCosechas() + " para vender")
-		// console.println("game deberia haber hablado")
 	}
 
 	method dejarAspersorAca(){
