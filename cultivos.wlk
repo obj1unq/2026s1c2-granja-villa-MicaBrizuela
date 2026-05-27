@@ -1,3 +1,11 @@
+// cultivos.wlk
+// cultivos.wlk
+// cultivos.wlk
+// cultivos.wlk
+// cultivos.wlk
+// cultivos.wlk
+// cultivos.wlk
+// cultivos.wlk
 import personaje.*
 import wollok.game.*
 import direcciones.*
@@ -6,7 +14,7 @@ import granja.*
 //falta sembrar en cada cultivo 
 class Maiz {
 	var property position = game.at(1,1)
-	var estado = maizBebe
+	var property estado = maizBebe //test property
 	// method position() {
 	// 	// TODO: hacer que aparezca donde lo plante Hector
 	// 	return game.at(1, 1)
@@ -31,14 +39,14 @@ class Maiz {
 
 class Trigo {
 	var property position = game.origin()
-	var estado = trigo0
+	var property estado = trigo0 //solo por testing
 	// method position() {
 	// 	// TODO: hacer que aparezca donde lo plante Hector
 	// 	return game.at(1, 1)
 	// }
 	method image() {
 		// TODO: hacer que devuelva la imagen que corresponde
-		return estado.imagen()
+		return "wheat_" + estado.etapa() + ".png"
 	}
 
 	method regar(){
@@ -68,7 +76,7 @@ class Tomaco {
 
 	method regar(){
 		const nuevaPos = tablero.posicionEnEjeY(position)
-		if (not granja.hayCultivosEn(nuevaPos)){
+		if (not granja.hayAlgoAca(nuevaPos)){
 			position = nuevaPos
 		}
 	}
@@ -78,6 +86,23 @@ class Tomaco {
 
 	method precio(){
 		return 80
+	}
+}
+object tomacoFactory{
+	method crear(){
+		return new Tomaco(position = personaje.position())
+	}
+}
+
+object maizFactory{
+	method crear(){
+		return new Maiz(position = personaje.position())
+	}
+}
+
+object trigoFactory{
+	method crear(){
+		return new Trigo(position = personaje.position())
 	}
 }
 
@@ -102,9 +127,6 @@ object maizAdulto{
 }
 
 object trigo0{
-	method imagen(){
-		return "wheat_0.png"
-	}
 
 	method siguiente(){
 		return trigo1
@@ -120,9 +142,6 @@ object trigo0{
 }
 
 object trigo1{
-	method imagen(){
-		return "wheat_1.png"
-	}
 
 	method siguiente(){
 		return trigo2
@@ -138,9 +157,6 @@ object trigo1{
 }
 
 object trigo2{
-	method imagen(){
-		return "wheat_2.png"
-	}
 	
 	method siguiente(){
 		return trigo3
@@ -156,9 +172,6 @@ object trigo2{
 }
 
 object trigo3{
-	method imagen(){
-		return "wheat_3.png"
-	}
 
 	method siguiente(){
 		return trigo0
@@ -171,4 +184,38 @@ object trigo3{
 	method esCosechable(){
 		return true
 	}
+}
+
+
+class Mercado{
+    const mercaderia = #{}
+    var property position = null
+    const property image = "market.png"
+    var property cantidadMonedas = null
+
+    method puedoPagar(_cultivos){
+        return self.montoAPagar(_cultivos) <= cantidadMonedas
+    }
+
+    method montoAPagar(_cultivos){
+        return _cultivos.sum({c => c.precio()})
+    }
+
+    method comprar(_cultivos){
+        personaje.recibirPago(self.montoAPagar(_cultivos))
+		cantidadMonedas -= self.montoAPagar(_cultivos)
+        mercaderia.addAll(_cultivos)
+    }
+
+    method comprarSiPuede(_cultivos){
+        if (self.puedoPagar(_cultivos)){
+			self.comprar(_cultivos)
+		}
+    }
+}
+
+object mercadoFactory{
+    method crear(){
+        return new Mercado(position = tablero.posicionAleatoria(), cantidadMonedas = (100.. 500).anyOne())
+    }
 }

@@ -1,3 +1,4 @@
+// direcciones.wlk
 import wollok.game.*
 object tablero {
     
@@ -30,6 +31,13 @@ object tablero {
     method limitrofes(position){
         return #{arriba.siguiente(position), abajo.siguiente(position), derecha.siguiente(position), izquierda.siguiente(position)}
     }
+
+    method posicionAleatoria(){
+        const x = (0.. game.width()-1).anyOne()
+        const y = (0.. game.height()-1).anyOne()
+        return game.at(x,y)
+    }
+
 }
 
 object arriba {

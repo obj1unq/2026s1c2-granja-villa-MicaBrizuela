@@ -1,12 +1,57 @@
+// granja.wlk
+// granja.wlk
+// granja.wlk
+// granja.wlk
+// granja.wlk
+// granja.wlk
+// granja.wlk
+// granja.wlk
+// granja.wlk
+// granja.wlk
+// granja.wlk
+// granja.wlk
+// granja.wlk
+// granja.wlk
+// granja.wlk
 
 import direcciones.*
 import wollok.game.*
-object granja {
-    const cultivos = #{}
-    const aspersores = #{}
+import cultivos.*
 
-    method agregarAspersor(_aspersor){
-        aspersores.add(_aspersor)
+object granja {
+    const property cultivos = #{} //property solo por testig
+    const property aspersores = #{} //property solo por testig
+    const property mercados = #{}//property solo por testig
+
+    method hayAlgoAca(_position){
+        return self.hayMercadoAca(_position) or self.hayCultivosEn(_position) or self.hayAspersorAca(_position)
+    }
+
+    method abrirMercado(){
+        if(mercados.size() < 3){
+            const m = mercadoFactory.crear()
+            mercados.add(m)
+            game.addVisual(m)
+            self.abrirMercado()
+        }
+    }
+
+    method hayMercadoAca(_position){
+        return mercados.any({m => m.position() == _position})
+    }
+
+    method mercadoAca(_position){
+        return mercados.find({m => m.position() == _position})
+    }
+
+    method agregarAspersor(_position){
+        const a = aspersorFactory.crear(_position)
+        game.addVisual(a)
+        aspersores.add(a)
+    }
+
+    method hayAspersorAca(_position){
+        return aspersores.any({m => m.position() == _position})
     }
 
     method regadoAutomatico(){
@@ -28,6 +73,7 @@ object granja {
     method cultivoAca(_position){
         return cultivos.find({c => c.position() == _position})
     }
+
 }
 
 class Aspersor{
@@ -45,3 +91,10 @@ class Aspersor{
         }
     }
 }
+
+object aspersorFactory {
+    method crear(_position){
+        return new Aspersor(position = _position)
+    }
+}
+
